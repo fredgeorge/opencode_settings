@@ -1,0 +1,36 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (local)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "qwen3-coder-agent": {
+          "name": "Qwen3-Coder-Next 80B-A3B  (Q8, MoE, fast)",
+          "tools": true,
+          "reasoning": false
+        },
+        "qwen3.6-coder-agent": {
+          "name": "Qwen3.6-27B Dense  (Q6, thinking off)",
+          "tools": true,
+          "reasoning": true,
+          "options": {
+            "think": false
+          }
+        },
+        "qwen3.6-coder-agent-think": {
+          "name": "Qwen3.6-27B Dense  (Q6, thinking ON — hard problems)",
+          "tools": true,
+          "reasoning": true,
+          "options": {
+            "think": true
+          }
+        }
+      }
+    }
+  },
+  "model": "ollama/qwen3-coder-agent"
+}
