@@ -32,5 +32,22 @@
       }
     }
   },
-  "model": "ollama/qwen3-coder-agent"
+  "model": "ollama/qwen3-coder-agent",
+  "permission": {
+    "websearch": "allow",
+    "webfetch": "allow",
+    "bash": {
+      "ls": "allow",
+      "find": "allow",
+      "grep": "allow",
+      "rg": "allow",
+      "cat": "ask",
+      "git": "ask",
+      "gradle": "ask",
+      "./gradlew": "ask",
+      "rm": "deny",
+      "curl": "ask",
+      "wget": "ask"
+    }
+  }
 }
