@@ -13,6 +13,38 @@
           "tools": true,
           "reasoning": false
         },
+        "qwen3.6-coding-nothink": {
+          "name": "Qwen3.6 35B A3B Coding BF16 — primary coding",
+          "tools": true,
+          "reasoning": true,
+          "options": {
+            "think": false
+          }
+        },
+        "qwen3.6-coding-think": {
+          "name": "Qwen3.6 35B A3B Coding BF16 — thinking",
+          "tools": true,
+          "reasoning": true,
+          "options": {
+            "think": true
+          }
+        },
+        "qwen3.6:35b-a3b-mlx-bf16": {
+          "name": "Qwen3.6 35B A3B MLX BF16 — general fallback",
+          "tools": true,
+          "reasoning": true,
+          "options": {
+            "think": false
+          }
+        },
+        "qwen3.6:35b-a3b-bf16": {
+          "name": "Qwen3.6 35B A3B BF16 — baseline",
+          "tools": true,
+          "reasoning": true,
+          "options": {
+            "think": false
+          }
+        },
         "qwen3.6-coder-agent": {
           "name": "Qwen3.6-27B Dense  (Q6, thinking off)",
           "tools": true,
@@ -32,7 +64,7 @@
       }
     }
   },
-  "model": "ollama/qwen3-coder-agent",
+  "model": "ollama/qwen3.6:35b-a3b-coding-bf16",
   "permission": {
     "websearch": "allow",
     "webfetch": "allow",
