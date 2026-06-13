@@ -9,12 +9,12 @@
       },
       "models": {
         "qwen3-coder-agent": {
-          "name": "Qwen3-Coder-Next 80B-A3B  (Q8, MoE, fast)",
+          "name": "Qwen3-Coder-Next 80B-A3B  (Q8, MoE, fast) - 84GB",
           "tools": true,
           "reasoning": false
         },
         "qwen3.6-coding-nothink": {
-          "name": "Qwen3.6 35B A3B Coding BF16 — primary coding",
+          "name": "Qwen3.6 35B A3B Coding BF16 — primary coding - 70 GB",
           "tools": true,
           "reasoning": true,
           "options": {
@@ -22,7 +22,7 @@
           }
         },
         "qwen3.6-coding-think": {
-          "name": "Qwen3.6 35B A3B Coding BF16 — thinking",
+          "name": "Qwen3.6 35B A3B Coding BF16 — thinking - 70 GB",
           "tools": true,
           "reasoning": true,
           "options": {
@@ -30,7 +30,7 @@
           }
         },
         "qwen3.6:35b-a3b-mlx-bf16": {
-          "name": "Qwen3.6 35B A3B MLX BF16 — general fallback",
+          "name": "Qwen3.6 35B A3B MLX BF16 — general fallback - 70 GB",
           "tools": true,
           "reasoning": true,
           "options": {
@@ -38,7 +38,7 @@
           }
         },
         "qwen3.6:35b-a3b-bf16": {
-          "name": "Qwen3.6 35B A3B BF16 — baseline",
+          "name": "Qwen3.6 35B A3B BF16 — baseline - 71 GB",
           "tools": true,
           "reasoning": true,
           "options": {
@@ -46,7 +46,7 @@
           }
         },
         "qwen3.6-coder-agent": {
-          "name": "Qwen3.6-27B Dense  (Q6, thinking off)",
+          "name": "Qwen3.6-27B Dense  (Q6, thinking off) - 84 GB",
           "tools": true,
           "reasoning": true,
           "options": {
@@ -55,6 +55,14 @@
         },
         "qwen3.6-coder-agent-think": {
           "name": "Qwen3.6-27B Dense  (Q6, thinking ON — hard problems)",
+          "tools": true,
+          "reasoning": true,
+          "options": {
+            "think": true
+          }
+        },
+        "gemma4:31b-it-bf16": {
+          "name": "Gemma4 31b IT BF16 — general fallback - 62GB",
           "tools": true,
           "reasoning": true,
           "options": {
