@@ -8,6 +8,29 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
+        "qwen3.6:27b-code-bf16-v2": {
+          "name": "Qwen3.6 27B Dense bf16 V2 (main thinking/code model) - 54GB + 32K context",
+          "tools": true,
+          "reasoning": false
+        },
+        "qwen3-coder-next:q8.0": {
+          "name": "Qwen3-Coder-Next 80B-A3B  (Q8, MoE, big coding model, no thinking) - 84GB",
+          "tools": true,
+          "reasoning": false
+        },
+        "qwen3.6-coder-agent": {
+          "name": "Qwen3.6-27B Dense  (Q6, fast 21GB fallback) - 84 GB?",
+          "tools": true,
+          "reasoning": true,
+          "options": {
+            "think": false
+          }
+        },
+        "qwen3.6:27b-dense-bf16": {
+          "name": "Qwen3.6 27B Dense bf16 (Dense) - 54GB + 256K context",
+          "tools": true,
+          "reasoning": false
+        },
         "qwen3-coder-agent": {
           "name": "Qwen3-Coder-Next 80B-A3B  (Q8, MoE, fast) - 84GB",
           "tools": true,
@@ -39,14 +62,6 @@
         },
         "qwen3.6:35b-a3b-bf16": {
           "name": "Qwen3.6 35B A3B BF16 — baseline - 71 GB",
-          "tools": true,
-          "reasoning": true,
-          "options": {
-            "think": false
-          }
-        },
-        "qwen3.6-coder-agent": {
-          "name": "Qwen3.6-27B Dense  (Q6, thinking off) - 84 GB",
           "tools": true,
           "reasoning": true,
           "options": {
