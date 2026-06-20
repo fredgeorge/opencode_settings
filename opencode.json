@@ -8,8 +8,8 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "qwen3.6:27b-code-bf16-v2": {
-          "name": "Qwen3.6 27B Dense bf16 V2 (main thinking/code model) - 54GB + 32K context",
+        "qwen3.6-27B-bf16-coder-agent": {
+          "name": "Qwen3.6 27B bf16 Coder Agent (main thinking/code model) - 54GB, 128 CTX, 32K predict",
           "tools": true,
           "reasoning": false
         },
@@ -28,6 +28,11 @@
         },
         "qwen3.6:27b-dense-bf16": {
           "name": "Qwen3.6 27B Dense bf16 (Dense) - 54GB + 256K context",
+          "tools": true,
+          "reasoning": false
+        },
+        "qwen3.6:27b-code-bf16-v2": {
+          "name": "Qwen3.6 27B Dense bf16 V2 (main thinking/code model) - 54GB + 32K context",
           "tools": true,
           "reasoning": false
         },
