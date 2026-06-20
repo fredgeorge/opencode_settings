@@ -13,7 +13,8 @@ Guidelines on creating and using extension methods in Kotlin.
 ## When to Use
 
 - When class construction is clumsy with long lines with few parameters
-- When a class in a closed packageis missing a method that would be useful to have in this module
+- **DO NOT USE** extensions methods as alternatives to clear, concise public constructors
+- When a class in a closed package is missing a method that would be useful to have in this module
 - When the target of a method is a collection of some type
 
 ## Constraints
@@ -21,7 +22,7 @@ Guidelines on creating and using extension methods in Kotlin.
 - Extensions methods that require access to private data must be in the class or its companion object
 - Extension methods on collections of a class should be in the companion object of that class
 - Extension methods with a single parameter should be marked with infix for better readability
-    - Infix is prohibited in companion objects except for extension methods
+    - Infix is prohibited in companion objects except for extension methods which have exactly one parameter
 
 ## Procedures
 

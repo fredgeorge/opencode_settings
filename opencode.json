@@ -13,7 +13,7 @@
           "tools": true,
           "reasoning": false
         },
-        "qwen3-coder-next:q8.0": {
+        "qwen3-coder-next:q8_0": {
           "name": "Qwen3-Coder-Next 80B-A3B  (Q8, MoE, big coding model, no thinking) - 84GB",
           "tools": true,
           "reasoning": false
