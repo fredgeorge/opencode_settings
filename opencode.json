@@ -8,91 +8,95 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "qwen3.6-27B-bf16-coder-agent": {
-          "name": "Qwen3.6 27B bf16 Coder Agent (main thinking/code model) - 54GB, 128 CTX, 32K predict",
+        "ornith:35b-Q8_0-code": {
+          "name": "1. Best coding — Ornith 35B Q8 Code",
+          "tools": true,
+          "reasoning": true,
+          "options": {
+            "temperature": 0.2,
+            "top_k": 20,
+            "top_p": 0.85,
+            "num_ctx": 65536,
+            "num_predict": 8192,
+            "repeat_penalty": 1.05
+          }
+        },
+        "ornith:35b-Q4_K_M-code": {
+          "name": "2. Fallback coding — Ornith 35B Q4 Code",
+          "tools": true,
+          "reasoning": true,
+          "options": {
+            "temperature": 0.2,
+            "top_k": 20,
+            "top_p": 0.85,
+            "num_ctx": 65536,
+            "num_predict": 8192,
+            "repeat_penalty": 1.05
+          }
+        },
+        "qwen3.6-27b-bf16-coder-agent": {
+          "name": "2b. Fallback coding — Qwen3.6 27B BF16 Coder Agent",
           "tools": true,
           "reasoning": false
         },
-        "qwen3-coder-next:q8_0": {
-          "name": "Qwen3-Coder-Next 80B-A3B  (Q8, MoE, big coding model, no thinking) - 84GB",
+        "ornith:35b-Q8_0-plan": {
+          "name": "3. Planning — Ornith 35B Q8 Plan",
+          "tools": true,
+          "reasoning": true,
+          "options": {
+            "temperature": 0.35,
+            "top_k": 20,
+            "top_p": 0.9,
+            "num_ctx": 131072,
+            "num_predict": 4096,
+            "repeat_penalty": 1.05
+          }
+        },
+        "qwen3-large-agent:q8_0": {
+          "name": "3b. Planning alternative — Qwen3 Large Agent Q8",
           "tools": true,
           "reasoning": false
         },
-        "qwen3.6-coder-agent": {
-          "name": "Qwen3.6-27B Dense  (Q6, fast 21GB fallback) - 84 GB?",
-          "tools": true,
-          "reasoning": true,
-          "options": {
-            "think": false
-          }
-        },
-        "qwen3.6:27b-dense-bf16": {
-          "name": "Qwen3.6 27B Dense bf16 (Dense) - 54GB + 256K context",
+        "llama3.3:70b-q8_0-prose": {
+          "name": "4. General chat — Llama 3.3 70B Q8 Prose",
           "tools": true,
           "reasoning": false
         },
-        "qwen3.6:27b-code-bf16-v2": {
-          "name": "Qwen3.6 27B Dense bf16 V2 (main thinking/code model) - 54GB + 32K context",
+        "llama3.3:70b-q4_k_m-chat": {
+          "name": "4b. General chat fast — Llama 3.3 70B Q4 Chat",
           "tools": true,
           "reasoning": false
         },
-        "qwen3-coder-agent": {
-          "name": "Qwen3-Coder-Next 80B-A3B  (Q8, MoE, fast) - 84GB",
-          "tools": true,
-          "reasoning": false
-        },
-        "qwen3.6-coding-nothink": {
-          "name": "Qwen3.6 35B A3B Coding BF16 — primary coding - 70 GB",
-          "tools": true,
-          "reasoning": true,
+        "ornith:9b-complete": {
+          "name": "5. Code completion — Ornith 9B Complete",
+          "tools": false,
+          "reasoning": false,
           "options": {
-            "think": false
+            "temperature": 0.1,
+            "top_k": 20,
+            "top_p": 0.8,
+            "num_ctx": 8192,
+            "num_predict": 256,
+            "repeat_penalty": 1.03
           }
         },
-        "qwen3.6-coding-think": {
-          "name": "Qwen3.6 35B A3B Coding BF16 — thinking - 70 GB",
+        "ornith:9b-fast-code": {
+          "name": "5b. Fast small coding — Ornith 9B Fast Code",
           "tools": true,
           "reasoning": true,
           "options": {
-            "think": true
-          }
-        },
-        "qwen3.6:35b-a3b-mlx-bf16": {
-          "name": "Qwen3.6 35B A3B MLX BF16 — general fallback - 70 GB",
-          "tools": true,
-          "reasoning": true,
-          "options": {
-            "think": false
-          }
-        },
-        "qwen3.6:35b-a3b-bf16": {
-          "name": "Qwen3.6 35B A3B BF16 — baseline - 71 GB",
-          "tools": true,
-          "reasoning": true,
-          "options": {
-            "think": false
-          }
-        },
-        "qwen3.6-coder-agent-think": {
-          "name": "Qwen3.6-27B Dense  (Q6, thinking ON — hard problems)",
-          "tools": true,
-          "reasoning": true,
-          "options": {
-            "think": true
-          }
-        },
-        "gemma4:31b-it-bf16": {
-          "name": "Gemma4 31b IT BF16 — general fallback - 62GB",
-          "tools": true,
-          "reasoning": true,
-          "options": {
-            "think": true
+            "temperature": 0.2,
+            "top_k": 20,
+            "top_p": 0.85,
+            "num_ctx": 32768,
+            "num_predict": 4096,
+            "repeat_penalty": 1.05
           }
         }
       }
     }
   },
-  "model": "ollama/qwen3.6:35b-a3b-coding-bf16",
+  "model": "ornith:35b-q8-code",
   "permission": {
     "websearch": "allow",
     "webfetch": "allow",

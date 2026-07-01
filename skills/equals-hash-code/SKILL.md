@@ -18,6 +18,8 @@ Standardize implementation of equals and hashCode in Kotlin classes.
 
 - Hash code must be consistent with equals. If two objects are equal, 
   they must have the same hash code, especially if rounding is needed for equals.
+- Equals cannot throw an exception. Test to ensure that null and other types
+  are handled gracefully.
 - Data classes have equals and hashCode implemented by default. Ensure hashCode
   only uses immutable data.
 
@@ -66,5 +68,20 @@ class Point(private val xValue: Double, private var yValue: Double) {
         (this.yValue - other.yValue).absoluteValue < EPSILON
     // Only hash immutable field
     override fun hashCode() = ((xValue / EPSILON).roundToLong().hashCode()
+}
+```
+
+### Full equals testing
+
+```kotlin
+class ChanceTest {
+    @Test fun equals() {
+        assertEquals(Chance(0.1), Chance(0.1))
+        assertNotEquals(Chance(0.1), Chance(0.2))
+        // Ensure no exception on null
+        assertNotEquals(Chance(0.1), null)
+        // Ensure no exception on different object type
+        assertNotEquals(Chance(0.1), "not a Chance")
+    }
 }
 ```
