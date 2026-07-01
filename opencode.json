@@ -8,7 +8,7 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "ornith:35b-Q8_0-code": {
+        "ornith:35b-q8-code": {
           "name": "1. Best coding — Ornith 35B Q8 Code",
           "tools": true,
           "reasoning": true,
@@ -21,7 +21,7 @@
             "repeat_penalty": 1.05
           }
         },
-        "ornith:35b-Q4_K_M-code": {
+        "ornith:35b-q4-code": {
           "name": "2. Fallback coding — Ornith 35B Q4 Code",
           "tools": true,
           "reasoning": true,
@@ -34,12 +34,12 @@
             "repeat_penalty": 1.05
           }
         },
-        "qwen3.6-27b-bf16-coder-agent": {
+        "qwen3.6:27B-bf16-coder-agent": {
           "name": "2b. Fallback coding — Qwen3.6 27B BF16 Coder Agent",
           "tools": true,
           "reasoning": false
         },
-        "ornith:35b-Q8_0-plan": {
+        "ornith:35b-q8-plan": {
           "name": "3. Planning — Ornith 35B Q8 Plan",
           "tools": true,
           "reasoning": true,
@@ -52,22 +52,22 @@
             "repeat_penalty": 1.05
           }
         },
-        "qwen3-large-agent:q8_0": {
+        "qwen3-q8-large-agent": {
           "name": "3b. Planning alternative — Qwen3 Large Agent Q8",
           "tools": true,
           "reasoning": false
         },
-        "llama3.3:70b-q8_0-prose": {
+        "llama3.3:70b-q8-prose": {
           "name": "4. General chat — Llama 3.3 70B Q8 Prose",
           "tools": true,
           "reasoning": false
         },
-        "llama3.3:70b-q4_k_m-chat": {
+        "llama3.3:70b-q4-chat": {
           "name": "4b. General chat fast — Llama 3.3 70B Q4 Chat",
           "tools": true,
           "reasoning": false
         },
-        "ornith:9b-complete": {
+        "ornith:9b-q4-complete": {
           "name": "5. Code completion — Ornith 9B Complete",
           "tools": false,
           "reasoning": false,
@@ -80,7 +80,7 @@
             "repeat_penalty": 1.03
           }
         },
-        "ornith:9b-fast-code": {
+        "ornith:9b-q4-fast-code": {
           "name": "5b. Fast small coding — Ornith 9B Fast Code",
           "tools": true,
           "reasoning": true,
