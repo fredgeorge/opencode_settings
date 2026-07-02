@@ -8,12 +8,10 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "ornith:35b-q8-code": {
-          "name": "1. Best coding — Ornith 35B Q8 Code",
-          "tools": true,
-          "reasoning": true,
+        "ornith:35b-fp16-code": {
+          "name": "1. Primary coding — Ornith 35B BF16",
           "options": {
-            "temperature": 0.2,
+            "temperature": 0.18,
             "top_k": 20,
             "top_p": 0.85,
             "num_ctx": 65536,
@@ -21,10 +19,8 @@
             "repeat_penalty": 1.05
           }
         },
-        "ornith:35b-q4-code": {
-          "name": "2. Fallback coding — Ornith 35B Q4 Code",
-          "tools": true,
-          "reasoning": true,
+        "ornith:35b-q8-code": {
+          "name": "2. Fast coding fallback — Ornith 35B Q8",
           "options": {
             "temperature": 0.2,
             "top_k": 20,
@@ -35,16 +31,12 @@
           }
         },
         "qwen3.6:27B-bf16-coder-agent": {
-          "name": "2b. Fallback coding — Qwen3.6 27B BF16 Coder Agent",
-          "tools": true,
-          "reasoning": false
+          "name": "3. Dense fallback — Qwen3.6 27B BF16"
         },
-        "ornith:35b-q8-plan": {
-          "name": "3. Planning — Ornith 35B Q8 Plan",
-          "tools": true,
-          "reasoning": true,
+        "ornith:35b-fp16-plan": {
+          "name": "4. Planning — Ornith 35B BF16",
           "options": {
-            "temperature": 0.35,
+            "temperature": 0.32,
             "top_k": 20,
             "top_p": 0.9,
             "num_ctx": 131072,
@@ -53,24 +45,13 @@
           }
         },
         "qwen3-q8-large-agent": {
-          "name": "3b. Planning alternative — Qwen3 Large Agent Q8",
-          "tools": true,
-          "reasoning": false
+          "name": "5. Planning alternative — Qwen3 Large Agent Q8"
         },
         "llama3.3:70b-q8-prose": {
-          "name": "4. General chat — Llama 3.3 70B Q8 Prose",
-          "tools": true,
-          "reasoning": false
-        },
-        "llama3.3:70b-q4-chat": {
-          "name": "4b. General chat fast — Llama 3.3 70B Q4 Chat",
-          "tools": true,
-          "reasoning": false
+          "name": "6. General chat — Llama 3.3 70B Q8"
         },
         "ornith:9b-q4-complete": {
-          "name": "5. Code completion — Ornith 9B Complete",
-          "tools": false,
-          "reasoning": false,
+          "name": "7. Code completion — Ornith 9B",
           "options": {
             "temperature": 0.1,
             "top_k": 20,
@@ -79,24 +60,12 @@
             "num_predict": 256,
             "repeat_penalty": 1.03
           }
-        },
-        "ornith:9b-q4-fast-code": {
-          "name": "5b. Fast small coding — Ornith 9B Fast Code",
-          "tools": true,
-          "reasoning": true,
-          "options": {
-            "temperature": 0.2,
-            "top_k": 20,
-            "top_p": 0.85,
-            "num_ctx": 32768,
-            "num_predict": 4096,
-            "repeat_penalty": 1.05
-          }
         }
       }
     }
   },
-  "model": "ornith:35b-q8-code",
+  "model": "ollama/ornith:35b-fp16-code",
+  "small_model": "ollama/ornith:9b-q4-fast-code",
   "permission": {
     "websearch": "allow",
     "webfetch": "allow",
