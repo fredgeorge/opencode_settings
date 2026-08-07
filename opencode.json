@@ -1,5 +1,37 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "openbrain": {
+      "type": "remote",
+      "url": "https://nlrqawhtihucvjoazlvp.supabase.co/functions/v1/open-brain-mcp",
+      "enabled": true,
+      "headers": {
+        "x-brain-key": "{env:OPENBRAIN_MCP_KEY}"
+      },
+      "timeout": 15000
+    },
+    "pdf-reader": {
+      "type": "local",
+      "command": [
+        "/opt/homebrew/bin/uv",
+        "run",
+        "--directory",
+        "/Users/fred/.config/opencode/mcp/pdf-reader",
+        "python",
+        "src/pdf_reader_mcp/__main__.py"
+      ],
+      "enabled": true,
+      "timeout": 60000
+    },
+    "okf": {
+      "type": "local",
+      "command": [
+        "/Users/fred/.local/bin/okf-mcp"
+      ],
+      "enabled": true,
+      "timeout": 60000
+    }
+  },
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -9,63 +41,78 @@
       },
       "models": {
         "ornith:35b-fp16-code": {
-          "name": "1. Primary coding — Ornith 35B BF16",
-          "options": {
-            "temperature": 0.18,
-            "top_k": 20,
-            "top_p": 0.85,
-            "num_ctx": 65536,
-            "num_predict": 8192,
-            "repeat_penalty": 1.05
-          }
+          "name": "Coding · Ornith 35B BF16 — Reliable fallback"
         },
         "ornith:35b-q8-code": {
-          "name": "2. Fast coding fallback — Ornith 35B Q8",
+          "name": "Coding · Ornith 35B Q8 — Fast"
+        },
+        "gemma4:31b-bf16-python": {
+          "name": "Python · Gemma 4 31B BF16",
           "options": {
             "temperature": 0.2,
-            "top_k": 20,
-            "top_p": 0.85,
-            "num_ctx": 65536,
-            "num_predict": 8192,
-            "repeat_penalty": 1.05
+            "top_k": 40,
+            "top_p": 0.9,
+            "min_p": 0.02,
+            "num_ctx": 131072,
+            "num_predict": 16384,
+            "repeat_penalty": 1.03
           }
         },
         "qwen3.6:27B-bf16-coder-agent": {
-          "name": "3. Dense fallback — Qwen3.6 27B BF16"
+          "name": "Coding · Qwen3.6 27B BF16 — Dense fallback"
         },
         "ornith:35b-fp16-plan": {
-          "name": "4. Planning — Ornith 35B BF16",
-          "options": {
-            "temperature": 0.32,
-            "top_k": 20,
-            "top_p": 0.9,
-            "num_ctx": 131072,
-            "num_predict": 4096,
-            "repeat_penalty": 1.05
-          }
+          "name": "Planning · Ornith 35B BF16"
         },
         "qwen3-q8-large-agent": {
-          "name": "5. Planning alternative — Qwen3 Large Agent Q8"
+          "name": "Planning · Qwen3 Large Agent Q8"
         },
         "llama3.3:70b-q8-prose": {
-          "name": "6. General chat — Llama 3.3 70B Q8"
+          "name": "Chat · Llama 3.3 70B Q8"
         },
         "ornith:9b-q4-complete": {
-          "name": "7. Code completion — Ornith 9B",
+          "name": "Utility · Ornith 9B — Small model completion"
+        },
+        "qwen3.5:122b-q4-k-m-openbrain": {
+          "name": "OpenBrain · Qwen 3.5 122B Curator"
+        }
+      }
+    },
+    "omlx": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Coding · Laguna S 2.1 NVFP4 — Primary agent",
+      "options": {
+        "baseURL": "http://127.0.0.1:8000/v1",
+        "timeout": 900000
+      },
+      "models": {
+        "Laguna-S-2.1-NVFP4-mlx": {
+          "name": "Laguna S 2.1 NVFP4 MLX",
+          "limit": {
+            "context": 65536,
+            "output": 8192
+          },
           "options": {
-            "temperature": 0.1,
-            "top_k": 20,
-            "top_p": 0.8,
-            "num_ctx": 8192,
-            "num_predict": 256,
-            "repeat_penalty": 1.03
+            "temperature": 0.2,
+            "topP": 0.9,
+            "topK": 40
+          }
+        },
+        "gpt-oss-120b-MLX-bf16": {
+          "name": "Deep Reasoning · GPT-OSS 120B BF16 MLX",
+          "limit": {
+            "context": 65536,
+            "output": 8192
+          },
+          "options": {
+            "temperature": 0.2
           }
         }
       }
     }
   },
-  "model": "ollama/ornith:35b-fp16-code",
-  "small_model": "ollama/ornith:9b-q4-fast-code",
+  "model": "omlx/Laguna-S-2.1-NVFP4-mlx",
+  "small_model": "ollama/ornith:9b-q4-complete",
   "permission": {
     "websearch": "allow",
     "webfetch": "allow",
