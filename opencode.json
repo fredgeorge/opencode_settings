@@ -30,6 +30,19 @@
       ],
       "enabled": true,
       "timeout": 60000
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true
+    },
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:GITHUB_MCP_TOKEN}"
+      }
     }
   },
   "provider": {
@@ -106,6 +119,22 @@
           },
           "options": {
             "temperature": 0.2
+          }
+        },
+        "Qwen3-Coder-Next-MLX-8bit": {
+          "name": "Qwen3 Coder Next MLX 8-bit",
+          "options": {
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 8192
+          }
+        },
+        "Qwen3-235B-A22B-mixed-3-4bit": {
+          "name": "Deep reasoning — Qwen3 235B A22B mixed 3/4-bit",
+          "options": {
+            "temperature": 0.3,
+            "top_p": 0.9,
+            "max_tokens": 16384
           }
         }
       }
