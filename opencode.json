@@ -93,7 +93,7 @@
     },
     "omlx": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Coding · Laguna S 2.1 NVFP4 — Primary agent",
+      "name": "oMLX (local)",
       "options": {
         "baseURL": "http://127.0.0.1:8000/v1",
         "timeout": 900000
@@ -122,21 +122,60 @@
           }
         },
         "Qwen3-Coder-Next-MLX-8bit": {
-          "name": "Qwen3 Coder Next MLX 8-bit",
+          "name": "Coding · Qwen3 Coder Next MLX 8-bit",
+          "limit": {
+            "context": 65536,
+            "output": 8192
+          },
           "options": {
             "temperature": 0.2,
-            "top_p": 0.9,
-            "max_tokens": 8192
+            "top_p": 0.9
           }
         },
-        "Qwen3-235B-A22B-mixed-3-4bit": {
-          "name": "Deep reasoning — Qwen3 235B A22B mixed 3/4-bit",
+        "Qwen3-235B-A22B-3bit": {
+          "name": "Architecture · Qwen3 235B A22B 3-bit",
+          "limit": {
+            "context": 16384,
+            "output": 4096
+          },
           "options": {
-            "temperature": 0.3,
-            "top_p": 0.9,
-            "max_tokens": 16384
+            "temperature": 0.25,
+            "top_p": 0.9
+          }
+        },
+        "Muse-Glimmer-30B-bf16": {
+          "name": "Planning · Muse Glimmer 30B BF16",
+          "options": {
+            "temperature": 0.2,
+            "top_p": 0.95
           }
         }
+      }
+    }
+  },
+  "agent": {
+    "architect-235": {
+      "description": "Deep architecture, planning, difficult debugging, and code review with minimal tool context",
+      "mode": "primary",
+      "model": "omlx/Qwen3-235B-A22B-3bit",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "lsp": "allow",
+        "edit": "deny",
+        "bash": "deny",
+        "task": "deny",
+        "skill": "deny",
+        "webfetch": "deny",
+        "websearch": "deny",
+        "todowrite": "deny",
+        "openbrain_*": "deny",
+        "pdf-reader_*": "deny",
+        "okf_*": "deny",
+        "context7_*": "deny",
+        "github_*": "deny"
       }
     }
   },
