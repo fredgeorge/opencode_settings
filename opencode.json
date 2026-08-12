@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "default_agent": "build",
   "mcp": {
     "openbrain": {
       "type": "remote",
@@ -53,14 +54,20 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "ornith:35b-fp16-code": {
-          "name": "Coding · Ornith 35B BF16 — Reliable fallback"
-        },
         "ornith:35b-q8-code": {
           "name": "Coding · Ornith 35B Q8 — Fast"
         },
+        "ornith:35b-q8-plan": {
+          "name": "Planning · Ornith 35B Q8 — Probation"
+        },
+        "ornith:9b-q4-complete": {
+          "name": "Utility · Ornith 9B — Small"
+        },
+        "llama3.3:70b-q8-prose": {
+          "name": "Chat · Llama 3.3 70B Q8"
+        },
         "gemma4:31b-bf16-python": {
-          "name": "Python · Gemma 4 31B BF16",
+          "name": "Python · Gemma 4 31B BF16 — Probation",
           "options": {
             "temperature": 0.2,
             "top_k": 40,
@@ -70,24 +77,6 @@
             "num_predict": 16384,
             "repeat_penalty": 1.03
           }
-        },
-        "qwen3.6:27B-bf16-coder-agent": {
-          "name": "Coding · Qwen3.6 27B BF16 — Dense fallback"
-        },
-        "ornith:35b-fp16-plan": {
-          "name": "Planning · Ornith 35B BF16"
-        },
-        "qwen3-q8-large-agent": {
-          "name": "Planning · Qwen3 Large Agent Q8"
-        },
-        "llama3.3:70b-q8-prose": {
-          "name": "Chat · Llama 3.3 70B Q8"
-        },
-        "ornith:9b-q4-complete": {
-          "name": "Utility · Ornith 9B — Small model completion"
-        },
-        "qwen3.5:122b-q4-k-m-openbrain": {
-          "name": "OpenBrain · Qwen 3.5 122B Curator"
         }
       }
     },
@@ -100,7 +89,7 @@
       },
       "models": {
         "Laguna-S-2.1-NVFP4-mlx": {
-          "name": "Laguna S 2.1 NVFP4 MLX",
+          "name": "Coding · Laguna S 2.1 NVFP4",
           "limit": {
             "context": 65536,
             "output": 8192
@@ -111,18 +100,8 @@
             "topK": 40
           }
         },
-        "gpt-oss-120b-MLX-bf16": {
-          "name": "Deep Reasoning · GPT-OSS 120B BF16 MLX",
-          "limit": {
-            "context": 65536,
-            "output": 8192
-          },
-          "options": {
-            "temperature": 0.2
-          }
-        },
         "Qwen3-Coder-Next-MLX-8bit": {
-          "name": "Coding · Qwen3 Coder Next MLX 8-bit",
+          "name": "Coding · Qwen3 Coder Next 8-bit",
           "limit": {
             "context": 65536,
             "output": 8192
@@ -143,8 +122,22 @@
             "top_p": 0.9
           }
         },
+        "gpt-oss-120b-MLX-bf16": {
+          "name": "OpenBrain · GPT-OSS 120B BF16",
+          "limit": {
+            "context": 65536,
+            "output": 8192
+          },
+          "options": {
+            "temperature": 0.2
+          }
+        },
         "Muse-Glimmer-30B-bf16": {
-          "name": "Planning · Muse Glimmer 30B BF16",
+          "name": "Planning · Muse Glimmer 30B BF16 — Probation",
+          "limit": {
+            "context": 32768,
+            "output": 8192
+          },
           "options": {
             "temperature": 0.2,
             "top_p": 0.95
@@ -154,10 +147,73 @@
     }
   },
   "agent": {
-    "architect-235": {
-      "description": "Deep architecture, planning, difficult debugging, and code review with minimal tool context",
+    "build": {
+      "description": "Default development agent for implementation, debugging, testing, and normal repository work",
       "mode": "primary",
-      "model": "omlx/Qwen3-235B-A22B-3bit",
+      "model": "omlx/Laguna-S-2.1-NVFP4-mlx",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "lsp": "allow",
+        "edit": "allow",
+        "task": "allow",
+        "todowrite": "allow",
+        "skill": "allow",
+        "websearch": "allow",
+        "webfetch": "allow",
+        "context7_*": "allow",
+        "github_*": "allow",
+        "okf_*": "allow",
+        "pdf-reader_*": "allow",
+        "openbrain_*": "ask",
+        "bash": {
+          "*": "ask",
+          "ls *": "allow",
+          "find *": "allow",
+          "grep *": "allow",
+          "rg *": "allow",
+          "pwd": "allow",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "git show*": "allow",
+          "git branch*": "allow",
+          "git add*": "ask",
+          "git commit*": "ask",
+          "git push*": "deny",
+          "rm *": "deny"
+        }
+      }
+    },
+    "plan": {
+      "description": "Planning, decomposition, design exploration, and implementation strategy without modifying files",
+      "mode": "primary",
+      "model": "omlx/Muse-Glimmer-30B-bf16",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "lsp": "allow",
+        "edit": "deny",
+        "bash": "deny",
+        "todowrite": "allow",
+        "websearch": "allow",
+        "webfetch": "allow",
+        "context7_*": "allow",
+        "github_*": "allow",
+        "okf_*": "allow",
+        "pdf-reader_*": "allow",
+        "openbrain_*": "ask"
+      }
+    },
+    "openbrain": {
+      "description": "Dedicated OpenBrain researcher and curator for durable project knowledge, retrieval, synthesis, and maintenance",
+      "mode": "primary",
+      "model": "omlx/gpt-oss-120b-MLX-bf16",
+      "prompt": "{file:./prompts/openbrain.md}",
       "permission": {
         "read": "allow",
         "glob": "allow",
@@ -167,35 +223,194 @@
         "edit": "deny",
         "bash": "deny",
         "task": "deny",
-        "skill": "deny",
-        "webfetch": "deny",
-        "websearch": "deny",
-        "todowrite": "deny",
-        "openbrain_*": "deny",
-        "pdf-reader_*": "deny",
-        "okf_*": "deny",
-        "context7_*": "deny",
-        "github_*": "deny"
+        "todowrite": "allow",
+        "websearch": "allow",
+        "webfetch": "allow",
+        "openbrain_*": "allow",
+        "pdf-reader_*": "allow",
+        "okf_*": "allow",
+        "context7_*": "allow",
+        "github_*": "allow"
+      }
+    },
+    "architect-235": {
+      "description": "Deep architecture, difficult debugging, design review, tradeoff analysis, and code review",
+      "mode": "primary",
+      "model": "omlx/Qwen3-235B-A22B-3bit",
+      "prompt": "{file:./prompts/architect.md}",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "lsp": "allow",
+        "edit": "deny",
+        "bash": "deny",
+        "task": "deny",
+        "todowrite": "allow",
+        "websearch": "allow",
+        "webfetch": "allow",
+        "context7_*": "allow",
+        "github_*": "allow",
+        "okf_*": "allow",
+        "pdf-reader_*": "allow",
+        "openbrain_*": "deny"
+      }
+    },
+    "coder-next": {
+      "description": "Heavyweight coding agent for difficult implementation, repository-wide refactoring, debugging, and tests",
+      "mode": "primary",
+      "model": "omlx/Qwen3-Coder-Next-MLX-8bit",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "lsp": "allow",
+        "edit": "allow",
+        "task": "allow",
+        "todowrite": "allow",
+        "skill": "allow",
+        "websearch": "allow",
+        "webfetch": "allow",
+        "context7_*": "allow",
+        "github_*": "allow",
+        "okf_*": "allow",
+        "pdf-reader_*": "allow",
+        "openbrain_*": "ask",
+        "bash": {
+          "*": "ask",
+          "ls *": "allow",
+          "find *": "allow",
+          "grep *": "allow",
+          "rg *": "allow",
+          "pwd": "allow",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "git show*": "allow",
+          "git branch*": "allow",
+          "git add*": "ask",
+          "git commit*": "ask",
+          "git push*": "deny",
+          "rm *": "deny"
+        }
+      }
+    },
+    "fast-code": {
+      "description": "Fast coding agent for smaller implementations, localized refactoring, debugging, and code questions",
+      "mode": "primary",
+      "model": "ollama/ornith:35b-q8-code",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "lsp": "allow",
+        "edit": "allow",
+        "task": "allow",
+        "todowrite": "allow",
+        "skill": "allow",
+        "websearch": "allow",
+        "webfetch": "allow",
+        "context7_*": "allow",
+        "github_*": "allow",
+        "okf_*": "allow",
+        "pdf-reader_*": "allow",
+        "openbrain_*": "ask",
+        "bash": {
+          "*": "ask",
+          "ls *": "allow",
+          "find *": "allow",
+          "grep *": "allow",
+          "rg *": "allow",
+          "pwd": "allow",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "git show*": "allow",
+          "git branch*": "allow",
+          "git add*": "ask",
+          "git commit*": "ask",
+          "git push*": "deny",
+          "rm *": "deny"
+        }
+      }
+    },
+    "prose": {
+      "description": "General writing, explanation, documentation, and non-coding conversation",
+      "mode": "primary",
+      "model": "ollama/llama3.3:70b-q8-prose",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "edit": "deny",
+        "bash": "deny",
+        "task": "deny",
+        "websearch": "allow",
+        "webfetch": "allow",
+        "openbrain_*": "ask",
+        "context7_*": "allow"
+      }
+    },
+    "python": {
+      "description": "Python-focused coding and review; retained temporarily to evaluate Gemma against Laguna and Qwen Coder Next",
+      "mode": "primary",
+      "model": "ollama/gemma4:31b-bf16-python",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "lsp": "allow",
+        "edit": "allow",
+        "task": "allow",
+        "todowrite": "allow",
+        "websearch": "allow",
+        "webfetch": "allow",
+        "context7_*": "allow",
+        "github_*": "allow",
+        "okf_*": "allow",
+        "openbrain_*": "ask",
+        "bash": {
+          "*": "ask",
+          "python *": "ask",
+          "python3 *": "ask",
+          "pytest *": "ask",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "rm *": "deny",
+          "git push*": "deny"
+        }
       }
     }
   },
   "model": "omlx/Laguna-S-2.1-NVFP4-mlx",
   "small_model": "ollama/ornith:9b-q4-complete",
   "permission": {
+    "*": "ask",
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "list": "allow",
+    "lsp": "allow",
     "websearch": "allow",
     "webfetch": "allow",
     "bash": {
-      "ls": "allow",
-      "find": "allow",
-      "grep": "allow",
-      "rg": "allow",
-      "cat": "ask",
-      "git": "ask",
-      "gradle": "ask",
-      "./gradlew": "ask",
-      "rm": "deny",
-      "curl": "ask",
-      "wget": "ask"
+      "*": "ask",
+      "ls *": "allow",
+      "find *": "allow",
+      "grep *": "allow",
+      "rg *": "allow",
+      "pwd": "allow",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "rm *": "deny",
+      "git push*": "deny"
     }
   }
 }
