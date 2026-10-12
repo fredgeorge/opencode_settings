@@ -11,19 +11,6 @@
       },
       "timeout": 15000
     },
-    "pdf-reader": {
-      "type": "local",
-      "command": [
-        "/opt/homebrew/bin/uv",
-        "run",
-        "--directory",
-        "/Users/fred/.config/opencode/mcp/pdf-reader",
-        "python",
-        "src/pdf_reader_mcp/__main__.py"
-      ],
-      "enabled": true,
-      "timeout": 60000
-    },
     "okf": {
       "type": "local",
       "command": [
@@ -36,17 +23,96 @@
       "type": "remote",
       "url": "https://mcp.context7.com/mcp",
       "enabled": true
-    },
-    "github": {
-      "type": "remote",
-      "url": "https://api.githubcopilot.com/mcp/",
-      "enabled": true,
-      "headers": {
-        "Authorization": "Bearer {env:GITHUB_MCP_TOKEN}"
-      }
     }
   },
   "provider": {
+    "spark-a": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "DGX Spark A",
+      "options": {
+        "baseURL": "http://100.70.72.104:8000/v1"
+      },
+      "models": {
+        "nvidia/Qwen3.6-35B-A3B-NVFP4": {
+          "name": "Qwen3.6 35B A3B NVFP4 — Spark",
+          "limit": {
+            "context": 131072,
+            "output": 8192
+          }
+        }
+      }
+    },
+    "spark-b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "DGX Spark B",
+      "options": {
+        "baseURL": "http://100.113.31.125:8888/v1"
+      },
+      "models": {
+        "qwen3.8-27b-sglang": {
+          "name": "Qwen3.8 27B NVFP4 DSpark — Spark B MEDIUM",
+          "options": {
+            "reasoningEffort": "medium"
+          },
+          "limit": {
+            "context": 131072,
+            "output": 8192
+          }
+        }
+      }
+    },
+    "spark-b-flash": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "DGX Spark B — Flash",
+      "options": {
+        "baseURL": "http://100.113.31.125:8889/v1"
+      },
+      "models": {
+        "qwen38-flash-next-nvfp4-mtp": {
+          "name": "Qwen3.8 Flash-Next NVFP4 MTP — Spark B",
+          "options": {
+            "reasoningEffort": "medium"
+          },
+          "limit": {
+            "context": 131072,
+            "output": 8192
+          }
+        }
+      }
+    },
+    "mtplx": {
+      "name": "MTPLX (local)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "apiKey": "{env:MTPLX_API_KEY}",
+        "baseURL": "http://127.0.0.1:18083/v1",
+        "chunkTimeout": 900000,
+        "headers": {
+          "x-mtplx-client": "opencode"
+        },
+        "timeout": false
+      },
+      "models": {
+        "mtplx-qwen38-27b-optimized-speed": {
+          "name": "Qwen 3.8 27B MTPLX Q4 MTP",
+          "reasoning": false,
+          "temperature": false,
+          "tool_call": true,
+          "limit": {
+            "context": 131072,
+            "output": 16384
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        }
+      }
+    },
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama (local)",
@@ -150,7 +216,7 @@
     "build": {
       "description": "Default development agent for implementation, debugging, testing, and normal repository work",
       "mode": "primary",
-      "model": "omlx/Laguna-S-2.1-NVFP4-mlx",
+      "model": "spark-a/nvidia/Qwen3.6-35B-A3B-NVFP4",
       "permission": {
         "read": "allow",
         "glob": "allow",
@@ -161,12 +227,13 @@
         "task": "allow",
         "todowrite": "allow",
         "skill": "allow",
+        "external_directory": {
+          "~/.config/opencode/skills/**": "allow"
+        },
         "websearch": "allow",
         "webfetch": "allow",
         "context7_*": "allow",
-        "github_*": "allow",
         "okf_*": "allow",
-        "pdf-reader_*": "allow",
         "openbrain_*": "ask",
         "bash": {
           "*": "ask",
@@ -190,7 +257,7 @@
     "plan": {
       "description": "Planning, decomposition, design exploration, and implementation strategy without modifying files",
       "mode": "primary",
-      "model": "omlx/Muse-Glimmer-30B-bf16",
+      "model": "mtplx/mtplx-qwen38-27b-optimized-speed",
       "permission": {
         "read": "allow",
         "glob": "allow",
@@ -203,9 +270,7 @@
         "websearch": "allow",
         "webfetch": "allow",
         "context7_*": "allow",
-        "github_*": "allow",
         "okf_*": "allow",
-        "pdf-reader_*": "allow",
         "openbrain_*": "ask"
       }
     },
@@ -227,10 +292,8 @@
         "websearch": "allow",
         "webfetch": "allow",
         "openbrain_*": "allow",
-        "pdf-reader_*": "allow",
         "okf_*": "allow",
         "context7_*": "allow",
-        "github_*": "allow"
       }
     },
     "architect-235": {
@@ -251,10 +314,46 @@
         "websearch": "allow",
         "webfetch": "allow",
         "context7_*": "allow",
-        "github_*": "allow",
         "okf_*": "allow",
-        "pdf-reader_*": "allow",
         "openbrain_*": "deny"
+      }
+    },
+    "deep-code": {
+      "description": "Harder agentic work",
+      "mode": "primary",
+      "model": "mtplx/mtplx-qwen38-27b-optimized-speed",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "lsp": "allow",
+        "edit": "allow",
+        "task": "allow",
+        "todowrite": "allow",
+        "skill": "allow",
+        "websearch": "allow",
+        "webfetch": "allow",
+        "context7_*": "allow",
+        "okf_*": "allow",
+        "openbrain_*": "ask",
+        "bash": {
+          "*": "ask",
+          "ls *": "allow",
+          "find *": "allow",
+          "grep *": "allow",
+          "rg *": "allow",
+          "pwd": "allow",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "git show*": "allow",
+          "git branch*": "allow",
+          "git add*": "ask",
+          "git commit*": "ask",
+          "git push*": "deny",
+          "rm *": "deny"
+        }
       }
     },
     "coder-next": {
@@ -274,9 +373,7 @@
         "websearch": "allow",
         "webfetch": "allow",
         "context7_*": "allow",
-        "github_*": "allow",
         "okf_*": "allow",
-        "pdf-reader_*": "allow",
         "openbrain_*": "ask",
         "bash": {
           "*": "ask",
@@ -314,9 +411,7 @@
         "websearch": "allow",
         "webfetch": "allow",
         "context7_*": "allow",
-        "github_*": "allow",
         "okf_*": "allow",
-        "pdf-reader_*": "allow",
         "openbrain_*": "ask",
         "bash": {
           "*": "ask",
@@ -371,7 +466,6 @@
         "websearch": "allow",
         "webfetch": "allow",
         "context7_*": "allow",
-        "github_*": "allow",
         "okf_*": "allow",
         "openbrain_*": "ask",
         "bash": {
@@ -388,7 +482,7 @@
       }
     }
   },
-  "model": "omlx/Laguna-S-2.1-NVFP4-mlx",
+  "model": "spark-a/nvidia/Qwen3.6-35B-A3B-NVFP4",
   "small_model": "ollama/ornith:9b-q4-complete",
   "permission": {
     "*": "ask",
